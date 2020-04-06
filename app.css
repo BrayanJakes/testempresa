@@ -1,0 +1,15 @@
+.bordeado{
+    border: 1px solid red;
+    border-radius: 20px;
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+.formulario{
+    margin: auto;
+    border: 1px solid red;
+    border-radius: 10px;
+    padding: 10px;
+}

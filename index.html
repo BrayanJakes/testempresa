@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="app.css">
+    <title>Test</title>
+</head>
+<body>
+
+    <nav class="navbar navbar-sucbg-primary bg-primary ">
+        <div class="container">
+            <a class="navbar-brand text-white" href="#">
+                <img src="./batido.png" width="30" height="30" class="d-inline-block align-top " alt="">
+                Batidos de Frutas
+              </a>
+
+          
+        </div>
+      </nav>
+
+    <div class="container mt-3" id="app">
+        <div class="alert alert-success text-center" v-if="alertBebida">
+            <strong>Bebida Creada con exito</strong>
+        </div>
+        <h4 class="text-center bordeado">Creamos tu proteina al gusto que tu paladar no se podra resistir</h4>
+
+
+        <div class="row mt-2">
+            <div class="col-6">
+                <button class="btn btn-success btn-block"
+                :disabled="paginacion === 1"
+                @click="paginacion = 1">Crear nuevo batido</button>
+            </div>
+            <div class="col-6">
+                <button class="btn btn-info btn-block"
+                :disabled="paginacion === 2"
+                @click="paginacion = 2">Ver batidos creados</button>
+            </div>
+        </div>
+
+
+        <div class="container  mt-3">
+          
+                <div class="formulario" v-if="paginacion === 1">
+                    <div class="form-group">
+                        <label ><strong>Nombre del batido:</strong></label>
+                        <input type="text" v-model="nombreBebida" class="form-control">
+                    </div>
+    
+                    <div class="form-group">
+                        <label ><strong>Frutas:</strong></label>
+                        <select  class="form-control" v-model="frutaSeleccionada">
+                            <option v-for="fruta in frutas" :value="fruta"> {{fruta.fruta}} </option>
+                        </select>
+                        <br>
+                        <div class="badge badge-info m-1 cursor"
+                        v-for="(frutaSlc, index) in frutaSeleccionadas"
+                        @click="eliminarFruta(index)"
+                        > {{frutaSlc.fruta}} </div>
+                    </div>
+    
+                    <div class="form-group">
+                        <label ><strong>Liquidos:</strong></label>
+                        <select  class="form-control" v-model="liquidoSeleccionada" >
+                            <option v-for="liquido in liquidos" :value="liquido"> {{liquido.liquido}} </option>
+                        </select>
+                    </div>
+    
+    
+                    <div class="form-group">
+                        <label ><strong>Proteinas:</strong></label>
+                        <select  class="form-control" v-model="proteinaSeleccionada" >
+                            <option v-for="proteina in proteinas" :value="proteina"> {{proteina}} </option>
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label ><strong>Gusto:</strong></label>
+                       <input type="number"
+                       onkeypress="return filterFloat(event,this);" 
+                       class="form-control" v-model="gusto" style="width: 20%; display: inline;">%
+                    </div>
+    
+                    <div class="form-group">
+                        <button class="btn btn-success btn-block"
+                        :disabled="gusto === '' || nombreBebida === ''"
+                        @click="guardarBebida()">Crear Bebida</button>
+                    </div>
+             
+                </div>
+
+                <div v-if="paginacion === 2">
+
+                   <h5>Batidos Creados</h5>
+
+                   <div class="text-warning text-center"  v-if=" batidosCreados.length === 0">
+
+                        <p><strong>Aun no tienes batidos creados</strong></p>
+
+                   </div>
+
+                   <div class="row" v-if=" batidosCreados.length !== 0">
+                       <div class="col-md-4 my-3" v-for="(batidos, index) in batidosCreados">
+                           <div class="bordeado">
+                               <div class="row">
+                                   <div class="col-6 text-center"> <strong> {{index + 1}} - {{batidos.nombre}}</strong> </div>
+                                   <div class="col-3"> <img src="./corazon.png" width="20px" height="20px"> <strong>{{batidos.caloria}}</strong></div>
+                                   <div class="col-3"> <img src="./llama.png" width="20px" height="20px"> <strong>{{batidos.gusto}}%</strong></div>
+                               </div>
+
+
+                               
+                               
+                              
+                              
+                            </div>
+                            <div class="badge badge-info m-1" v-for="fruta in batidos.frutas">
+                                {{fruta.fruta}}
+                            </div>
+
+                            <div class="badge badge-info m-1">
+                                {{batidos.liquido.liquido}}
+                            </div>
+
+                            <div class="badge badge-info m-1">
+                                {{batidos.proteina}}
+                            </div>
+                          
+                       </div>
+                   </div>
+
+                </div>
+        </div>
+    </div>
+
+
+
+    <script src="vue.js"></script>
+    <script src="jquery.js"></script>
+    <script src="bootstrap.js"></script>
+    <script src="app.js"></script>
+
+    
+</body>
+</html>
